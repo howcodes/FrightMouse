@@ -1,0 +1,555 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width,maximum-scale=1.0,user-scalable=no,initial-scale=1.0">
+    <script>
+        //单位自适应
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= 640) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                    }
+                };
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        .gameIndex {
+            width: 100%;
+            position: relative;
+            background: url(Img/bg.jpg) no-repeat center/cover;
+            display: block;
+        }
+
+        .btnImage {
+            height: 0.56rem;
+            width: 1.71rem;
+            position: absolute;
+        }
+
+        .startBtn {
+            top: 7.6rem;
+            left: 1.2rem;
+        }
+
+        .ruleBtn {
+            top: 7.6rem;
+            left: 3.5rem;
+        }
+
+        .againBtn {
+            top: 9rem;
+            left: 1.2rem;
+        }
+
+        .recordBtn {
+            top: 9rem;
+            left: 3.5rem;
+        }
+
+        .gameRule {
+            display: none;
+            z-index: 10;
+            width: 5.6rem;
+            position: fixed;
+            left: 50%;
+            top: 1rem;
+            margin-left: -2.8rem;
+            text-align: center;
+        }
+
+        .gameHideBg {
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 10;
+            position: absolute;
+        }
+
+        .ruleImage {
+            width: 90%;
+            height: 90%;
+        }
+
+        #closeRule {
+            position: absolute;
+            width: 0.6rem;
+            bottom: -0.5rem;
+            left: 50%;
+            margin-left: -0.3rem;
+        }
+
+        .gamePlay {
+            width: 100%;
+            position: relative;
+            background: url(Img/bg2.jpg) no-repeat center/cover;
+            display: none;
+        }
+
+        .timeRun {
+            height: 0.7rem;
+            position: absolute;
+            top: 3.2rem;
+            left: 50%;
+            margin-left: -0.35rem;
+            width: 0.7rem;
+            background: url(Img/runtime.png) no-repeat center/cover;
+            font-size: 0.35rem;
+            color: #19591C;
+            line-height: 0.7rem;
+            text-align: center;
+        }
+
+        .scoreDiv {
+            position: absolute;
+            top: 4rem;
+            right: 0.5rem;
+            font-size: 0.3rem;
+            color: #19591C;
+        }
+
+        .gameContent {
+            width: 100%;
+            height: 4.3rem;
+            position: absolute;
+            top: 4.5rem;
+        }
+
+        .mouseUl {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .mouseLi {
+            width: 1.96rem;
+            height: 0.7rem;
+            background: url(Img/dong1.png) no-repeat center/cover;
+            position: relative;
+        }
+
+        .theMouseDiv {
+            position: absolute;
+            top: -0.57rem;
+            left: 0.48rem;
+            width: 1rem;
+            height: 1rem;
+            overflow: hidden;
+            border-bottom-left-radius: 0.3rem;
+            border-bottom-right-radius: 0.3rem;
+        }
+
+        .theMouse {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+        }
+
+        .hammer {
+            position: absolute;
+            z-index: 1;
+            top: -0.7rem;
+            left: 0.8rem;
+            width: 1rem;
+            display: none;
+        }
+
+        .socreDetail {
+            position: absolute;
+            font-size: 0.35rem;
+            top: -0.8rem;
+            left: 0.6rem;
+            z-index: 2;
+            color: #ff3;
+            display: none;
+        }
+
+        .overShow {
+            display: none;
+        }
+
+        .gameResult {
+            display: none;
+            z-index: 10;
+            width: 5.6rem;
+            position: fixed;
+            left: 50%;
+            top: 2.3rem;
+            margin-left: -2.8rem;
+            text-align: center;
+        }
+
+        .resultImage {
+            width: 90%;
+            height: 90%;
+        }
+
+        #closeResult {
+            position: absolute;
+            width: 0.6rem;
+            bottom: -0.5rem;
+            left: 50%;
+            margin-left: -0.3rem;
+            z-index: 10;
+        }
+
+        .resultTitle {
+            position: absolute;
+            font-size: 0.5rem;
+            top: 0.3rem;
+            left: 31%;
+            color: #265E08;
+        }
+
+        .resultScoreText {
+            position: absolute;
+            font-size: 0.28rem;
+            top: 1rem;
+            left: 33%;
+            color: #265E08;
+        }
+
+        .reslutText {
+            position: absolute;
+            font-size: 0.25rem;
+            top: 1.5rem;
+            display: inline-block;
+            width: 85%;
+            left: 8%;
+            color: #265E08;
+            display: none;
+        }
+
+        .resultBtn {
+            position: absolute;
+            font-size: 0.3rem;
+            display: inline-block;
+            width: 2.3rem;
+            height: 0.6rem;
+            background: #CB6437;
+            border-radius: 1.2rem;
+            color: #fff;
+            line-height: 0.6rem;
+        }
+
+        .failBtn {
+            top: 2.4rem;
+            left: 1.6rem;
+            display: none;
+        }
+
+        .successBtn {
+            top: 1.8rem;
+            left: 1.6rem;
+            display: none;
+        }
+
+        .prizeResult {
+            display: none;
+            z-index: 10;
+            width: 5.6rem;
+            position: fixed;
+            left: 50%;
+            top: 1rem;
+            margin-left: -2.8rem;
+            text-align: center;
+        }
+
+        .prizeImage {
+            width: 90%;
+            height: 90%;
+        }
+
+        #closePrize {
+            position: absolute;
+            width: 0.6rem;
+            bottom: -0.5rem;
+            left: 50%;
+            margin-left: -0.3rem;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="gameHideBg"></div>
+    <div class="gameRule">
+        <img class="ruleImage" src="Img/gz_bg.png" />
+        <img id="closeRule" src="Img/close.png" />
+    </div>
+    <div class="gameIndex">
+        <img class="btnImage startBtn" src="Img/ks.png" />
+        <img class="btnImage ruleBtn" src="Img/gz.png" />
+    </div>
+    <div class="gamePlay">
+        <div class="timeRun">30</div>
+        <div class="scoreDiv">得分:<span id="textScore">0</span></div>
+        <div class="gameContent">
+            <ul class="mouseUl">
+                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
+                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
+                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
+                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
+                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
+                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
+                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
+                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
+                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
+            </ul>
+        </div>
+        <div class="gameResult">
+            <span class="resultTitle"></span>
+            <span class="resultScoreText">你的成绩:<span class="reslutScore"></span>分</span>
+            <span class="reslutText">很遗憾，成绩要达到80分以上才能抽奖，请继续努力哦！</span>
+            <div class="resultBtn failBtn">再来一次</div>
+            <div class="resultBtn successBtn">点击开奖</div>
+            <img class="resultImage" src="Img/gameresult.png" />
+            <img id="closeResult" src="Img/close.png" />
+        </div>
+        <div class="overShow">
+            <img class="btnImage againBtn" src="Img/playagain.png" />
+            <img class="btnImage recordBtn" src="Img/prizerecord.png" />
+        </div>
+        <div class="prizeResult">
+            <img class="prizeImage" src="Img/prize1.png" />
+            <img id="closePrize" src="Img/close.png" />
+        </div>
+    </div>
+    <div id="musicDiv">
+        <audio src="mp3/game.mp3" id="gameMusic"></audio>
+        <audio src="mp3/gameOver.mp3" id="gameOver"></audio>
+        <audio src="mp3/gameSuccess.mp3" id="gameSuccess"></audio>
+        <audio src="mp3/fight.mp3" id="fight"></audio>
+    </div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var height = $(window).height();
+        var textScore = $("#textScore");
+        var ulList = $(".theMouseDiv");
+        $(".gameIndex").css("height", height + 'px');
+        $(".gamePlay").css("height", height + 'px');
+        $(".ruleBtn").click(function () {
+            $(".gameHideBg").css("display", "block");
+            $(".gameRule").css("display", "block");
+        });
+        //关闭规则
+        $("#closeRule").click(function () {
+            $(".gameHideBg").css("display", "none");
+            $(".gameRule").css("display", "none");
+        });
+        //开始游戏
+        $(".startBtn").click(function () {
+            $(".gameIndex").css("display", "none");
+            $(".gamePlay").css("display", "block");
+            init();
+            payGame();
+        });
+        //再来一次
+        $(".againBtn").click(function () {
+            $(".overShow").css("display", "none");
+            init();
+            payGame();
+        });
+        //游戏失败再来一次
+        $(".failBtn").click(function () {
+            $(".gameHideBg").css("display", "none");
+            $(".gameResult").css("display", "none");
+            $(".overShow").css("display", "none");
+            $(".failBtn").css("display", "none");
+            init();
+            payGame();
+        });
+        //关闭游戏结果
+        $("#closeResult").click(function () {
+            $(".gameHideBg").css("display", "none");
+            $(".gameResult").css("display", "none");
+            $(".failBtn").css("display", "none");
+            $(".successBtn").css("display", "none");
+        });
+        //点击查看奖品
+        $(".successBtn").click(function () {
+            $(".gameResult").css("display", "none");
+            $(".successBtn").css("display", "none");
+            $(".prizeResult").css("display", "block");
+        });
+        //关闭奖品页
+        $("#closePrize").click(function () {
+            $(".gameHideBg").css("display", "none");
+            $(".prizeResult").css("display", "none");
+            $(".gameHideBg").css("display", "none");
+        });
+
+        //打击病毒
+        var _that = 0;
+        ulList.click(function () {
+            //判断是否有病毒
+            if (this.children.length != 0 && _that != this) {
+                $("#fight").remove();
+                $("#musicDiv").append('<audio src="mp3/fight.mp3" autoplay="autoplay" id="fight"></audio>');
+                var who = $(this.children[0]).attr("src");
+                who = who.substr(who.length - 6, 1);
+                var that = this;
+                switch (who) {
+                    case 'a':
+                        that.children[0].src = 'Img/a2.png';
+                        break;
+                    case 'b':
+                        that.children[0].src = 'Img/b2.png';
+                        score += 8;
+                        $(that).next().next().text('+8');
+                        $(that).next().next().css('display', 'block');
+                        break;
+                    case 'c':
+                        that.children[0].src = 'Img/c2.png';
+                        score += 10;
+                        $(that).next().next().text('+10');
+                        $(that).next().next().css('display', 'block');
+                        break;
+                    case 'd':
+                        that.children[0].src = 'Img/d2.png';
+                        score += 5;
+                        $(that).next().next().text('+5');
+                        $(that).next().next().css('display', 'block');
+                        break;
+                }
+                $(this).next().css('display', 'block');
+                setTimeout(function () {
+                    $(that).next().css('display', 'none');
+                    $(that).next().next().css('display', 'none');
+                }, 200)
+                textScore.text(score);
+            }
+            _that = this;
+        });
+        //初始化
+        function init() {
+            score = 0;
+            time = 30;
+            $("#textScore").text('0')
+        }
+        //开启游戏
+        function payGame() {
+            document.getElementById("gameMusic").play();
+            var timeRun = $(".timeRun");
+            var ulList = $(".theMouseDiv");
+            var index = 0;
+            var mouseTimer = setInterval(function () {
+                var idx = parseInt(Math.random() * ulList.length);
+                if (idx === index) {
+                    if (idx < 8)
+                        idx++;
+                    else
+                        idx--;
+                }
+                var select = randomNum(1, 4);
+                var code = nowTime();
+                switch (select) {
+                    case 1:
+                        if (ulList[idx].children.length == 0)
+                            ulList[idx].innerHTML = '<img class="theMouse" src="Img/a1.png" data-id="' + code + '" />';
+                        break;
+                    case 2:
+                        if (ulList[idx].children.length == 0)
+                            ulList[idx].innerHTML = '<img class="theMouse" src="Img/b1.png" data-id="' + code + '" />';
+                        break;
+                    case 3:
+                        if (ulList[idx].children.length == 0)
+                            ulList[idx].innerHTML = '<img class="theMouse" src="Img/c1.png" data-id="' + code + '" />';
+                        break;
+                    case 4:
+                        if (ulList[idx].children.length == 0)
+                            ulList[idx].innerHTML = '<img class="theMouse" src="Img/d1.png" data-id="' + code + '" />';
+                        break;
+                }
+                $(".theMouse").animate({ top: '0px' }, 1000).animate({ top: '60px' }, 1000);
+                index = idx;
+                setTimeout(function () {
+                    $('.theMouse[data-id="' + code + '"]').remove();
+                }, 1700);
+            }, 500);
+            var runTimer = setInterval(function () {
+                time--;
+                timeRun.text(time);
+                if (time === 0) {
+                    clearInterval(runTimer);
+                    clearInterval(mouseTimer);
+                    $('.theMouse').remove();
+                    $(".gameHideBg").css("display", "block");
+                    $(".overShow").css("display", "block");
+                    document.getElementById("gameMusic").pause();
+                    setTimeout(function () {
+                        $(".gameResult").css("display", "block");
+                        $(".reslutScore").text(score);
+                        if (score < 85) {
+                            document.getElementById("gameOver").play();
+                            $(".resultTitle").text("挑战失败");
+                            $(".reslutText").css("display", "block");
+                            $(".failBtn").css("display", "block");
+
+                        } else {
+                            document.getElementById("gameSuccess").play();
+                            $(".resultTitle").text("挑战成功");
+                            $(".reslutText").css("display", "none");
+                            $(".successBtn").css("display", "block");
+                        }
+                    }, 500);
+                }
+            }, 1000);
+        }
+        //随机生成指定范围数字
+        function randomNum(minNum, maxNum) {
+            switch (arguments.length) {
+                case 1:
+                    return parseInt(Math.random() * minNum + 1, 10);
+                    break;
+                case 2:
+                    return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+                    break;
+                default:
+                    return 0;
+                    break;
+            }
+        }
+        //时间戳
+        function nowTime() {
+            var myDate = new Date();
+            //获取当前年
+            var year = myDate.getFullYear();
+            //获取当前月
+            var month = myDate.getMonth() + 1;
+            //获取当前日
+            var date = myDate.getDate();
+            var h = myDate.getHours();       //获取当前小时数(0-23)
+            var m = myDate.getMinutes();     //获取当前分钟数(0-59)
+            var s = myDate.getSeconds();
+            var t = myDate.getMilliseconds();
+            var now = year + '-' + month + "-" + date + " " + h + ':' + m + ":" + s + ":" + t;
+            return now;
+        }
+    });
+</script>
+</html>
