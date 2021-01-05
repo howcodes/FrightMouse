@@ -1,5 +1,6 @@
 ﻿<!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
@@ -25,7 +26,8 @@
         })(document, window);
     </script>
     <style type="text/css">
-        html, body {
+        html,
+        body {
             margin: 0;
             padding: 0;
             position: relative;
@@ -78,7 +80,7 @@
         .gameHideBg {
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             display: none;
             z-index: 10;
             position: absolute;
@@ -294,6 +296,7 @@
     </style>
 
 </head>
+
 <body>
     <div class="gameHideBg"></div>
     <div class="gameRule">
@@ -309,15 +312,42 @@
         <div class="scoreDiv">得分:<span id="textScore">0</span></div>
         <div class="gameContent">
             <ul class="mouseUl">
-                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
-                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
-                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
-                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
-                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
-                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
-                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
-                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
-                <li class="mouseLi"><div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span class="socreDetail"></span></li>
+                <li class="mouseLi">
+                    <div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span
+                        class="socreDetail"></span>
+                </li>
+                <li class="mouseLi">
+                    <div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span
+                        class="socreDetail"></span>
+                </li>
+                <li class="mouseLi">
+                    <div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span
+                        class="socreDetail"></span>
+                </li>
+                <li class="mouseLi">
+                    <div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span
+                        class="socreDetail"></span>
+                </li>
+                <li class="mouseLi">
+                    <div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span
+                        class="socreDetail"></span>
+                </li>
+                <li class="mouseLi">
+                    <div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span
+                        class="socreDetail"></span>
+                </li>
+                <li class="mouseLi">
+                    <div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span
+                        class="socreDetail"></span>
+                </li>
+                <li class="mouseLi">
+                    <div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span
+                        class="socreDetail"></span>
+                </li>
+                <li class="mouseLi">
+                    <div class="theMouseDiv"></div><img class="hammer" src="Img/hammer.png" /><span
+                        class="socreDetail"></span>
+                </li>
             </ul>
         </div>
         <div class="gameResult">
@@ -353,54 +383,43 @@
         $(".gameIndex").css("height", height + 'px');
         $(".gamePlay").css("height", height + 'px');
         $(".ruleBtn").click(function () {
-            $(".gameHideBg").css("display", "block");
-            $(".gameRule").css("display", "block");
+            $(".gameHideBg,.gameRule").show();
         });
         //关闭规则
         $("#closeRule").click(function () {
-            $(".gameHideBg").css("display", "none");
-            $(".gameRule").css("display", "none");
+            $(".gameHideBg,.gameRule").hide();
         });
         //开始游戏
         $(".startBtn").click(function () {
-            $(".gameIndex").css("display", "none");
-            $(".gamePlay").css("display", "block");
+            $(".gameIndex").hide();;
+            $(".gamePlay").show();
             init();
             payGame();
         });
         //再来一次
         $(".againBtn").click(function () {
-            $(".overShow").css("display", "none");
+            $(".overShow").hide();
             init();
             payGame();
         });
         //游戏失败再来一次
         $(".failBtn").click(function () {
-            $(".gameHideBg").css("display", "none");
-            $(".gameResult").css("display", "none");
-            $(".overShow").css("display", "none");
-            $(".failBtn").css("display", "none");
+            $(".gameHideBg,.gameResult,.overShow,.failBtn").hide();
             init();
             payGame();
         });
         //关闭游戏结果
         $("#closeResult").click(function () {
-            $(".gameHideBg").css("display", "none");
-            $(".gameResult").css("display", "none");
-            $(".failBtn").css("display", "none");
-            $(".successBtn").css("display", "none");
+            $(".gameHideBg,.gameResult,.successBtn,.failBtn").hide();
         });
         //点击查看奖品
         $(".successBtn").click(function () {
-            $(".gameResult").css("display", "none");
-            $(".successBtn").css("display", "none");
-            $(".prizeResult").css("display", "block");
+            $(".gameResult,.successBtn").hide();
+            $(".prizeResult").show();
         });
         //关闭奖品页
         $("#closePrize").click(function () {
-            $(".gameHideBg").css("display", "none");
-            $(".prizeResult").css("display", "none");
-            $(".gameHideBg").css("display", "none");
+            $(".gameHideBg,.prizeResult,.gameHideBg").hide();
         });
 
         //打击病毒
@@ -409,7 +428,8 @@
             //判断是否有病毒
             if (this.children.length != 0 && _that != this) {
                 $("#fight").remove();
-                $("#musicDiv").append('<audio src="mp3/fight.mp3" autoplay="autoplay" id="fight"></audio>');
+                $("#musicDiv").append(
+                    '<audio src="mp3/fight.mp3" autoplay="autoplay" id="fight"></audio>');
                 var who = $(this.children[0]).attr("src");
                 who = who.substr(who.length - 6, 1);
                 var that = this;
@@ -421,25 +441,25 @@
                         that.children[0].src = 'Img/b2.png';
                         score += 8;
                         $(that).next().next().text('+8');
-                        $(that).next().next().css('display', 'block');
+                        $(that).next().next().show();
                         break;
                     case 'c':
                         that.children[0].src = 'Img/c2.png';
                         score += 10;
                         $(that).next().next().text('+10');
-                        $(that).next().next().css('display', 'block');
+                        $(that).next().next().show();
                         break;
                     case 'd':
                         that.children[0].src = 'Img/d2.png';
                         score += 5;
                         $(that).next().next().text('+5');
-                        $(that).next().next().css('display', 'block');
+                        $(that).next().next().show();
                         break;
                 }
-                $(this).next().css('display', 'block');
+                $(this).next().show();
                 setTimeout(function () {
-                    $(that).next().css('display', 'none');
-                    $(that).next().next().css('display', 'none');
+                    $(that).next().hide();
+                    $(that).next().next().hide();
                 }, 200)
                 textScore.text(score);
             }
@@ -466,26 +486,34 @@
                         idx--;
                 }
                 var select = randomNum(1, 4);
-                var code = nowTime();
+                var code = +new Date();
                 switch (select) {
                     case 1:
                         if (ulList[idx].children.length == 0)
-                            ulList[idx].innerHTML = '<img class="theMouse" src="Img/a1.png" data-id="' + code + '" />';
+                            ulList[idx].innerHTML = '<img class="theMouse" src="Img/a1.png" data-id="' +
+                            code + '" />';
                         break;
                     case 2:
                         if (ulList[idx].children.length == 0)
-                            ulList[idx].innerHTML = '<img class="theMouse" src="Img/b1.png" data-id="' + code + '" />';
+                            ulList[idx].innerHTML = '<img class="theMouse" src="Img/b1.png" data-id="' +
+                            code + '" />';
                         break;
                     case 3:
                         if (ulList[idx].children.length == 0)
-                            ulList[idx].innerHTML = '<img class="theMouse" src="Img/c1.png" data-id="' + code + '" />';
+                            ulList[idx].innerHTML = '<img class="theMouse" src="Img/c1.png" data-id="' +
+                            code + '" />';
                         break;
                     case 4:
                         if (ulList[idx].children.length == 0)
-                            ulList[idx].innerHTML = '<img class="theMouse" src="Img/d1.png" data-id="' + code + '" />';
+                            ulList[idx].innerHTML = '<img class="theMouse" src="Img/d1.png" data-id="' +
+                            code + '" />';
                         break;
                 }
-                $(".theMouse").animate({ top: '0px' }, 1000).animate({ top: '60px' }, 1000);
+                $(".theMouse").animate({
+                    top: '0px'
+                }, 1000).animate({
+                    top: '60px'
+                }, 1000);
                 index = idx;
                 setTimeout(function () {
                     $('.theMouse[data-id="' + code + '"]').remove();
@@ -498,23 +526,20 @@
                     clearInterval(runTimer);
                     clearInterval(mouseTimer);
                     $('.theMouse').remove();
-                    $(".gameHideBg").css("display", "block");
-                    $(".overShow").css("display", "block");
+                    $(".gameHideBg,.overShow").show();
                     document.getElementById("gameMusic").pause();
                     setTimeout(function () {
-                        $(".gameResult").css("display", "block");
+                        $(".gameResult").show();
                         $(".reslutScore").text(score);
                         if (score < 85) {
                             document.getElementById("gameOver").play();
                             $(".resultTitle").text("挑战失败");
-                            $(".reslutText").css("display", "block");
-                            $(".failBtn").css("display", "block");
-
+                            $(".reslutText,.failBtn").show();
                         } else {
                             document.getElementById("gameSuccess").play();
                             $(".resultTitle").text("挑战成功");
-                            $(".reslutText").css("display", "none");
-                            $(".successBtn").css("display", "block");
+                            $(".reslutText").hide();
+                            $(".successBtn").show();
                         }
                     }, 500);
                 }
@@ -534,22 +559,7 @@
                     break;
             }
         }
-        //时间戳
-        function nowTime() {
-            var myDate = new Date();
-            //获取当前年
-            var year = myDate.getFullYear();
-            //获取当前月
-            var month = myDate.getMonth() + 1;
-            //获取当前日
-            var date = myDate.getDate();
-            var h = myDate.getHours();       //获取当前小时数(0-23)
-            var m = myDate.getMinutes();     //获取当前分钟数(0-59)
-            var s = myDate.getSeconds();
-            var t = myDate.getMilliseconds();
-            var now = year + '-' + month + "-" + date + " " + h + ':' + m + ":" + s + ":" + t;
-            return now;
-        }
     });
 </script>
+
 </html>
